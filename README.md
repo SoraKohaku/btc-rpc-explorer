@@ -1,46 +1,72 @@
 # BTC RPC Explorer
 
-![homepage](https://github.com/janoside/btc-rpc-explorer/blob/master/public/img/screenshots/homepage.png?raw=true)
+## Self-Hosted Bitcoin explorer for everyone running [Bitcoin Core](https://github.com/bitcoin/bitcoin).
 
-[![npm version][npm-ver-img]][npm-ver-url] [![NPM downloads][npm-dl-img]][npm-dl-url]
+[![npm version][npm-ver-img]][npm-ver-url] [![NPM downloads][npm-dl-alltime-img]][npm-dl-url]
 
 
-Simple, database-free Bitcoin blockchain explorer, via RPC to [Bitcoin Core](https://github.com/bitcoin/bitcoin).
+---
 
-This is a simple, self-hosted explorer for the Bitcoin blockchain, driven by RPC calls to your own [Bitcoin](https://github.com/bitcoin/bitcoin) node. It is easy to run and can be connected to other tools (like [ElectrumX](https://github.com/spesmilo/electrumx)) to achieve a full-featured explorer.
 
-Whatever reasons one may have for running a full node (trustlessness, technical curiosity, supporting the network, etc) it's helpful to appreciate the "fullness" of your node. With this explorer, you can explore not just the blockchain database, but also explore the functional capabilities of your own node.
+![homepage](./public/img/screenshots/homepage.png)
 
-Live demo available at: [https://explorer.btc21.org](https://explorer.btc21.org)
+
+
+This is a self-hosted explorer for the Bitcoin blockchain, driven by RPC calls to your own [Bitcoin](https://github.com/bitcoin/bitcoin) node. It is easy to run and can be connected to other tools (like Electrum servers) to achieve a full-featured explorer.
+
+Whatever reasons you may have for running a full node (trustlessness, technical curiosity, supporting the network, etc) it's valuable to appreciate the *fullness* of your node. With this explorer, you can explore not just the blockchain database, but also explore all of the functional capabilities of your own node.
+
+Live demos:
+
+* [BitcoinExplorer.org](https://bitcoinexplorer.org) / [testnet](https://testnet.bitcoinexplorer.org) / [signet](https://signet.bitcoinexplorer.org)
+
 
 # Features
 
 * Network Summary dashboard
 * View details of blocks, transactions, and addresses
 * Analysis tools for viewing stats on blocks, transactions, and miner activity
+* JSON REST API
 * See raw JSON content from bitcoind used to generate most pages
 * Search by transaction ID, block hash/height, and address
-* Optional transaction history for addresses by querying from ElectrumX, blockchain.com, blockchair.com, or blockcypher.com
+* Optional transaction history for addresses by querying from Electrum-protocol servers (e.g. Electrs, ElectrumX), blockchain.com, blockchair.com, or blockcypher.com
 * Mempool summary, with fee, size, and age breakdowns
 * RPC command browser and terminal
+
 
 # Changelog / Release notes
 
 See [CHANGELOG.md](/CHANGELOG.md).
 
+
 # Getting started
 
 ## Prerequisites
 
-1. Install and run a full, archiving node - [instructions](https://bitcoin.org/en/full-node). Ensure that your bitcoin node has full transaction indexing enabled (`txindex=1`) and the RPC server enabled (`server=1`).
-2. Synchronize your node with the Bitcoin network (you *can* use this tool while your node is still sychronizing, but some pages may fail).
-3. Install a "recent" version of Node.js (8+ recommended).
+1. Install `Bitcoin Core` - [instructions](https://bitcoin.org/en/full-node). Ensure that `Bitcoin Core`'s' RPC server is enabled (`server=1`).
+2. Allow `Bitcoin Core` to synchronize with the Bitcoin network (you *can* use this tool while sychronizing, but some pages may fail).
+3. Install Node.js (16+ required, 18+ recommended).
+
+### Note about pruning and indexing configurations
+
+This tool is designed to work best with full transaction indexing enabled (`txindex=1`) and pruning **disabled**. 
+However, if you're running Bitcoin Core v0.21+ you can run *without* `txindex` enabled and/or *with* `pruning` enabled and this tool will continue to function, but some data will be incomplete or missing. Also note that such Bitcoin Core configurations receive less thorough testing.
+
+In particular, with `pruning` enabled and/or `txindex` disabled, the following functionality is altered:
+
+* You will only be able to search for mempool, recently confirmed, and wallet transactions by their txid. Searching for non-wallet transactions that were confirmed over 3 blocks ago is only possible if you provide the confirmed block height in addition to the txid.
+* Pruned blocks will display basic header information, without the list of transactions. Transactions in pruned blocks will not be available, unless they're wallet-related. Block stats will only work for unpruned blocks.
+* The address and amount of previous transaction outputs will not be shown, only the txid:vout.
+* The mining fee will only be available for unconfirmed transactions.
+
 
 ## Install / Run
 
 If you're running on mainnet with the default datadir and port, the default configuration should *Just Work*. Otherwise, see the **Configuration** section below.
 
 #### Install via `npm`:
+
+*Note: npm v7+ is required*
 
 ```bash
 npm install -g btc-rpc-explorer
@@ -55,7 +81,18 @@ btc-rpc-explorer
 4. `npm start`
 
 
-Using either method (`npm install` or run from source), after startup open [http://127.0.0.1:3002/](http://127.0.0.1:3002/)
+#### Install via AUR Arch Linux:
+
+###### Note: The below AUR package was created and is maintained by [@dougEfresh](https://github.com/dougEfresh). The details and history of the package can be seen [here](https://aur.archlinux.org/packages/btc-rpc-explorer/).
+
+1. `git clone https://aur.archlinux.org/btc-rpc-explorer.git`
+2. `cd btc-rpc-explorer`
+3. `makepkg -csi`
+4. `systemctl enable --now btc-rpc-explorer`
+
+
+
+After a default installation+startup using any of the above methods, the app can be viewed at [http://127.0.0.1:3002/](http://127.0.0.1:3002/)
 
 
 ## Configuration
@@ -81,11 +118,15 @@ btc-rpc-explorer --port 8080 --bitcoind-port 18443 --bitcoind-cookie ~/.bitcoin/
 
 #### Demo site settings
 
-To match the features visible on the demo site at [https://explorer.btc21.org](https://explorer.btc21.org) you'll need to set the following non-default configuration values:
+To match the features visible on the demo site at [BitcoinExplorer.org](https://bitcoinexplorer.org) you'll need to set the following non-default configuration values:
 
     BTCEXP_DEMO=true 		# enables some demo/informational aspects of the site
     BTCEXP_NO_RATES=false		# enables querying of exchange rate data
     BTCEXP_SLOW_DEVICE_MODE=false	# enables resource-intensive tasks (UTXO set query, 24hr volume querying) that are inappropriate for "slow" devices
+    BTCEXP_ADDRESS_API=electrum 	# use electrum-protocol servers for address lookups
+    BTCEXP_ELECTRUM_SERVERS=tcp://your-electrum-protocol-server-host:50001		# address(es) for my electrum-protocol server(s)
+    BTCEXP_IPSTACK_APIKEY=your-api-key		# enable peer ip geo-location
+    BTCEXP_MAPBOX_APIKEY=your-api-key		# enable map of peer locations
 
 #### SSO authentication
 
@@ -94,9 +135,9 @@ To enable it, make sure `BTCEXP_BASIC_AUTH_PASSWORD` is **not** set and set `BTC
 Then to access btc-rpc-explorer, your SSO provider needs to read the token from this file and set it in URL parameter `token`.
 For security reasons the token changes with each login, so the SSO provider needs to read it each time!
 
-After successfull access with the token a cookie is used for authentication, so you don't have to worry about it anymore.
+After successful access with the token, a cookie is set for authentication, so you don't need to worry about it anymore.
 To improve user experience you can set `BTCEXP_SSO_LOGIN_REDIRECT_URL` to the URL of your SSO provider.
-This causes the users to be redirected to login page if not logged in.
+This will cause users to be redirected to your login page if needed.
 
 ## Run via Docker
 
@@ -108,15 +149,27 @@ This causes the users to be redirected to login page if not logged in.
 
 See [instructions here](docs/nginx-reverse-proxy.md) for using nginx+certbot (letsencrypt) for an HTTPS-accessible, reverse-proxied site.
 
+
 # Support
 
-If you get value from this project, please consider supporting my continued work with a donation. Any and all donations are truly appreciated.
+If you get value from this project, please consider supporting my work with a donation. All donations are truly appreciated.
 
-* [https://donate.btc21.org](https://donate.btc21.org)
+Donate via BTC Pay Server:
+
+* [https://donate.bitcoinexplorer.org](https://donate.bitcoinexplorer.org)
+
+Or, via a lightning address:
+
+thanks@donate.btc21.org
 
 
 [npm-ver-img]: https://img.shields.io/npm/v/btc-rpc-explorer.svg?style=flat
 [npm-ver-url]: https://www.npmjs.com/package/btc-rpc-explorer
 [npm-dl-img]: http://img.shields.io/npm/dm/btc-rpc-explorer.svg?style=flat
 [npm-dl-url]: https://npmcharts.com/compare/btc-rpc-explorer?minimal=true
+
+[npm-dl-weekly-img]: https://badgen.net/npm/dw/btc-rpc-explorer?icon=npm&cache=300
+[npm-dl-monthly-img]: https://badgen.net/npm/dm/btc-rpc-explorer?icon=npm&cache=300
+[npm-dl-yearly-img]: https://badgen.net/npm/dy/btc-rpc-explorer?icon=npm&cache=300
+[npm-dl-alltime-img]: https://badgen.net/npm/dt/btc-rpc-explorer?icon=npm&cache=300&label=total%20downloads
 

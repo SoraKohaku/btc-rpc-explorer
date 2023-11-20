@@ -1,48 +1,55 @@
-var redis = require("redis");
-var bluebird = require("bluebird");
+"use strict";
 
-var config = require("./config.js");
-var utils = require("./utils.js");
+const { createClient } = require("redis");
 
-var redisClient = null;
+const config = require("./config.js");
+const utils = require("./utils.js");
+
+let redisClient = null;
 if (config.redisUrl) {
-	bluebird.promisifyAll(redis.RedisClient.prototype);
-
-	redisClient = redis.createClient({url:config.redisUrl});
+	redisClient = createClient({url:config.redisUrl});
 }
 
 function createCache(keyPrefix, onCacheEvent) {
 	return {
-		get: function(key) {
-			var prefixedKey = `${keyPrefix}-${key}`;
+		get: async function(key) {
+			if (!redisClient.isOpen) {
+				await redisClient.connect();
+			}
 
-			return new Promise(function(resolve, reject) {
-				onCacheEvent("redis", "try", prefixedKey);
+			const prefixedKey = `${keyPrefix}-${key}`;
 
-				redisClient.getAsync(prefixedKey).then(function(result) {
-					if (result == null) {
-						onCacheEvent("redis", "miss", prefixedKey);
+			onCacheEvent("redis", "try", prefixedKey);
 
-						resolve(null);
+			try {
+				let result = await redisClient.get(prefixedKey);
 
-					} else {
-						onCacheEvent("redis", "hit", prefixedKey);
+				if (result == null) {
+					onCacheEvent("redis", "miss", prefixedKey);
 
-						resolve(JSON.parse(result));
-					}
-				}).catch(function(err) {
-					onCacheEvent("redis", "error", prefixedKey);
+					return null;
 
-					utils.logError("328rhwefghsdgsdss", err);
+				} else {
+					onCacheEvent("redis", "hit", prefixedKey);
 
-					reject(err);
-				});
-			});
+					return JSON.parse(result);
+				}
+			} catch (err) {
+				onCacheEvent("redis", "error", prefixedKey);
+
+				utils.logError("328rhwefghsdgsdss", err, {key:prefixedKey});
+
+				throw err;
+			}
 		},
-		set: function(key, obj, maxAgeMillis) {
-			var prefixedKey = `${keyPrefix}-${key}`;
+		set: async function(key, obj, maxAgeMillis) {
+			if (!redisClient.isOpen) {
+				await redisClient.connect();
+			}
+			
+			const prefixedKey = `${keyPrefix}-${key}`;
 
-			redisClient.set(prefixedKey, JSON.stringify(obj), "PX", maxAgeMillis);
+			await redisClient.set(prefixedKey, JSON.stringify(obj), {"PX": maxAgeMillis});
 		}
 	};
 }
