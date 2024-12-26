@@ -285,7 +285,7 @@ module.exports = {
 			// 40
 			text: "No one has found the bottom of the Bitcoin rabbit hole.",
 			speaker: "Jameson Lopp",
-			date: "2010-11-10",
+			date: "2018-11-10",
 			url: "https://twitter.com/lopp/status/1061415918616698881"
 		},
 		{
@@ -664,7 +664,134 @@ module.exports = {
 			speaker: "Robert Breedlove",
 			url: "https://x.com/Swan/status/1723049733420097996",
 			date: "2023-11-10"
-		}
+		},
+		{
+			// 94
+			text: "Bitcoin is just an honest ledger that's pricing the real market.",
+			speaker: "Jeff Booth",
+			url: "https://www.youtube.com/watch?v=iXIiS_k-Gic",
+			date: "2023-11-22"
+		},
+		{
+			// 95
+			text: "I don’t think humanity has grasped the moral implications of, for the first time ever in human history, having a truly honest way to account for time and energy.",
+			speaker: "Jeff Booth",
+			url: "https://www.youtube.com/watch?v=iXIiS_k-Gic",
+			date: "2023-11-22"
+		},
+		{
+			// 96
+			text: "Who is Satoshi Nakamoto?",
+			speaker: "Michael Saylor",
+			url: "https://x.com/CedYoungelman/status/1735502677969088533",
+			date: "2023-12-14"
+		},
+		{
+			// 97
+			text: "Bitcoin is the human discovery of money. People have been experimenting with barter, beads, commodities, rocks, metals, and government promises for the last 10,000 years and Satoshi solved that problem in 2009.",
+			speaker: "dueyfromstlouis",
+			url: "https://x.com/dueyfromstlouis/status/1749129961922035929",
+			date: "2024-01-21"
+		},
+		{
+			// 98
+			text: "Hodling bitcoin is an extreme version of the marshmallow test that never ends.",
+			speaker: "Jameson Lopp",
+			url: "https://x.com/lopp/status/1578272200204996609",
+			date: "2022-10-07"
+		},
+		{
+			// 99
+			text: "If Bitcoin were [to] become the ultimate form of currency [to be] adopted by human society, I can tell you exactly what's gonna happen as the worst scenario...we're all gonna die. This is not a joke.",
+			speaker: "Chinese State Broadcaster",
+			url: "https://x.com/RussellOkung/status/1398262571199762433",
+			date: "2021-05-28"
+		},
+		{
+			// 100
+			text: "The lesson of Bitcoin is: bitcoin is the best asset, there is no second best asset, buy bitcoin, keep buying bitcoin, don't sell the bitcoin.",
+			speaker: "Michael Saylor",
+			url: "https://x.com/TheBTCTherapist/status/1765420027837055306?s=20",
+			date: "2024-03-06"
+		},
+		{
+			// 101
+			text: "Whoever gets the most bitcoin wins. There is no other end game.”",
+			speaker: "Michael Saylor",
+			url: "https://x.com/Swan/status/1767646389532540945?s=20",
+			date: "2024-03-12"
+		},
+		{
+			// 102
+			text: "I believe we have countries where you are frightened of your everyday existence, and Bitcoin gives you an opportunity to invest in something that is outside your country's control.",
+			speaker: "Larry Fink",
+			url: "https://x.com/MichaelDell/status/1812895900068442621",
+			date: "2024-07-15"
+		},
+		{
+			// 103
+			text: "Bitcoin isn't 'cool' new tech. It's an ugly contraption optimized to be neutral apolitical money. It's not the toy you want, it's the medicine you need.",
+			speaker: "Saifedean Ammous",
+			url: "https://x.com/pete_rizzo_/status/1868295107583090779",
+			date: "2018-12-05"
+		},
+		{
+			// 104
+			text: "The longer Bitcoin survives, the more ridiculous your government's shitcoin looks.",
+			speaker: "Saifedean Ammous",
+			url: "https://x.com/pete_rizzo_/status/1868295115657150523",
+			date: "2019-03-12"
+		},
+		{
+			// 105
+			text: "Bitcoin is a new invention of the digital age, [but] the problems it purports to solve - are as old as human society itself.",
+			speaker: "Saifedean Ammous",
+			url: "https://x.com/pete_rizzo_/status/1868295123974369715",
+			date: "2018-03-23"
+		},
+		{
+			// 106
+			text: "Bitcoin is the hardest money ever invented: growth in its value cannot possibly increase its supply; it can only make the network more secure and immune to attack.",
+			speaker: "Saifedean Ammous",
+			url: "https://x.com/pete_rizzo_/status/1868295140676075784",
+			date: "2018-03-23"
+		},
+		{
+			// 107
+			text: "Any person who owns Bitcoin achieves a level of economic freedom which was not possible before its invention.",
+			speaker: "Saifedean Ammous",
+			url: "https://x.com/pete_rizzo_/status/1868295157784695147",
+			date: "2018-03-23"
+		},
+		{
+			// 108
+			text: "The Bitcoin ledger of transactions might just be the only objective set of facts in the world.",
+			speaker: "Saifedean Ammous",
+			url: "https://x.com/pete_rizzo_/status/1868295173026800073",
+			date: "2018-03-23"
+		},
+		{
+			// 109
+			text: "Bitcoin doesn't need your intellectual acceptance; your self interest will force you to use it sooner or later.",
+			speaker: "Saifedean Ammous",
+			url: "https://x.com/pete_rizzo_/status/1868295195776696727",
+			date: "2017-12-11"
+		},
+		{
+			// 110
+			text: "Your groceries aren't becoming more expensive, your money is becoming less valuable. Your supermarket is not the problem; your central bank is.",
+			speaker: "Saifedean Ammous",
+			url: "https://x.com/pete_rizzo_/status/1868295211815756036",
+			date: "2024-08-18"
+		},
+		{
+			// 111
+			text: "Bitcoin isn't here to compete for your coffee payments. It can offer international final settlement in under an hour.",
+			speaker: "Saifedean Ammous",
+			url: "https://x.com/pete_rizzo_/status/1868295219403264368",
+			date: "2017-12-08"
+		},
+
 		/*{
 			text: "Bitcoin is a technological tour de force.",
 			speaker: "Bill Gates",

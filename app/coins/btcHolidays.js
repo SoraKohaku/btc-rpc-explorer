@@ -140,6 +140,31 @@ module.exports = {
 			name: "Bitcoin.org Registration Day",
 			date: "2008-08-18",
 			desc: "On this day in 2008, Satoshi Nakamoto registered the first Bitcoin website, bitcoin.org. It has hosted the Satoshi-based-node source code ever since."
+		},
+		{
+			name: "Running Bitcoin Day",
+			date: "2009-01-10",
+			desc: "On this day in 2009, Hal Finney tweeted his iconic '<a href=\"https://x.com/halfin/status/1110302988\">Running bitcoin</a>' tweet, as he joined the network."
+		},
+		{
+			name: "Bitcoin ETFs Day",
+			date: "2024-01-10",
+			desc: "On this day in 2024, after 10 years of denials, the US SEC approved 11 ETF products, enabling BTC price exposure to previously inaccessible capital markets."
+		},
+		{
+			name: "First Transaction Day",
+			date: "2009-01-12",
+			desc: "On this day in 2009, Satoshi transferred BTC via <a href='./tx/f4184fc596403b9d638783cf57adfe4c75c605f6356fbc91338530e9831e9e16'>the first ever (non-coinbase) transaction</a>. The recipient of that historic transaction is none other than Hal Finney."
+		},
+		{
+			name: "Halving #4 Day",
+			date: "2024-04-20",
+			desc: "On this day in 2024, just after midnight UTC, the fourth \"Halving\" cut the subsidy from 6.25 BTC to 3.125 BTC."
+		},
+		{
+			name: "'Hundred K' Day",
+			date: "2024-12-05",
+			desc: "On this day in 2024, at approximately 3:35am UTC, BTC achieved an exchange rate of 100,000 USD at a market cap just shy of 2 Trillion USD."
 		}
 	]
 };
